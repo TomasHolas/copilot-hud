@@ -2,7 +2,7 @@
 
 Status line for GitHub Copilot CLI. Node.js stdlib only, no dependencies.
 
-Shows model, repo and branch, YOLO flag, context window usage, session duration, lines changed, premium requests and AI units.
+Shows model, repo and branch, YOLO flag, context window usage, session duration, lines changed, premium requests and AI credit cost in USD (1 AI credit = $0.01 USD).
 
 Rate limits and active agents are not shown: Copilot CLI does not provide that data to the status line command.
 
