@@ -52,6 +52,12 @@ function fmtTokens(n) {
   return n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}k` : String(n);
 }
 
+function fmtUsd(ai) {
+  const nano = ai?.total_nano_aiu ?? (ai?.formatted != null ? Number(ai.formatted) * 1e9 : null);
+  if (nano == null || Number.isNaN(nano)) return null;
+  return `$${(nano / 1e11).toFixed(2)}`;
+}
+
 function renderGit(cwd) {
   const branch = git(['rev-parse', '--abbrev-ref', 'HEAD'], cwd);
   if (!branch) return null;
@@ -76,7 +82,8 @@ function renderCost(cost, ai) {
     parts.push(c(GREEN, `+${cost.total_lines_added}`) + ' ' + c(RED, `-${cost.total_lines_removed}`));
   }
   if (cost?.total_premium_requests != null) parts.push(c(DIM, `${cost.total_premium_requests} req`));
-  if (ai?.formatted) parts.push(c(DIM, `${ai.formatted} AIU`));
+  const usd = fmtUsd(ai);
+  if (usd) parts.push(c(DIM, usd));
   return parts.length ? parts.join(' · ') : null;
 }
 
